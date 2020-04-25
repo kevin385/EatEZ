@@ -1,0 +1,13 @@
+
+CREATE
+    TRIGGER `onorder` AFTER INSERT ON `orders`
+    FOR EACH ROW
+	UPDATE restaurants SET ordercount=ordercount+1 WHERE restaurants.R_ID = NEW.R_ID;
+
+CREATE
+    TRIGGER `ondelete` AFTER DELETE ON `orders`
+    FOR EACH ROW
+	UPDATE restaurants SET ordercount=ordercount-1 WHERE restaurants.R_ID = OLD.R_ID;
+
+CREATE PROCEDURE `checkrest`(IN `M_ID` VARCHAR(30))
+SELECT * from restaurants r where r.M_ID = M_ID ;
